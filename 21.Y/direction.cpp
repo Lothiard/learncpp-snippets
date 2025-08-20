@@ -22,17 +22,17 @@ Direction Direction::operator-() const {
 
 std::ostream& operator<<(std::ostream& out, Direction& direction) {
     switch (direction.direction()) {
-    case Direction::up: out << "up";
-    case Direction::down: return out << "down";
-    case Direction::left: return out << "left";
-    case Direction::right: return out << "right";
+    case Direction::up: out << "up"; break;
+    case Direction::down: return out << "down"; break;
+    case Direction::left: return out << "left"; break;
+    case Direction::right: return out << "right"; break;
     default: break;
     }
 
     return out;
 }
 
-static Direction getRandomDirection() {
+[[maybe_unused]] static Direction getRandomDirection() {
     Direction::Type random{static_cast<Direction::Type>(
         Random::get(0, Direction::Type::maxDirections - 1))};
     return Direction{random};
