@@ -18,19 +18,11 @@ int main() {
     std::cout << "You have " << player.health() << " health and are carrying "
               << player.gold() << " gold\n";
 
-    Creature o{"orc", 4, 2, 10, 'o'};
-    o.addGold(5);
-    o.reduceHealth(1);
-    std::cout << "The " << o.name() << " has " << o.health()
-              << " health and is carrying " << o.gold() << " gold.\n";
-
-    Monster dragon{Monster::Type::dragon};
-    std::cout << "A " << dragon.name() << " (" << dragon.symbol()
-              << ") was created.\n";
-
-    Monster orc{Monster::Type::orc};
-    std::cout << "A " << orc.name() << " (" << orc.symbol()
-              << ") was created.\n";
+    for (int i{}; i < 10; ++i) {
+        Monster m{Monster::getRandomMonster()};
+        std::cout << "A " << m.name() << " (" << m.symbol()
+                  << ") was created.\n";
+    }
 
     return 0;
 }

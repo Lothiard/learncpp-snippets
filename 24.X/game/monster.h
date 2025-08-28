@@ -1,6 +1,7 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
+#include "Random.h"
 #include "creature.h"
 
 class Monster : public Creature {
@@ -12,14 +13,11 @@ public:
         maxType,
     };
 
-    Monster(Type type) : Creature(monsterData[type]) {}
+    Monster(Type);
 
-private:
-    Type type_{};
-
-    static inline Creature monsterData[maxType] = {
-        Creature{"dragon", 20, 4, 100, 'D'}, Creature{"orc", 4, 2, 25, 'o'},
-        Creature{"slime", 1, 1, 10, 's'}};
+    static Monster getRandomMonster() {
+        return Monster{static_cast<Type>(Random::get(0, maxType - 1))};
+    }
 };
 
 #endif
