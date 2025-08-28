@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "monster.h"
 #include "player.h"
 #include <iostream>
 
@@ -22,6 +23,14 @@ int main() {
     o.reduceHealth(1);
     std::cout << "The " << o.name() << " has " << o.health()
               << " health and is carrying " << o.gold() << " gold.\n";
+
+    Monster dragon{Monster::Type::dragon};
+    std::cout << "A " << dragon.name() << " (" << dragon.symbol()
+              << ") was created.\n";
+
+    Monster orc{Monster::Type::orc};
+    std::cout << "A " << orc.name() << " (" << orc.symbol()
+              << ") was created.\n";
 
     return 0;
 }
