@@ -20,6 +20,8 @@ public:
     char symbol() const { return symbol_; }
 
     void reduceHealth(int damage) { health_ -= damage; }
+    void addHealth(int amount) { health_ += amount; }
+    void addDamage(int amount) { damage_ += amount; }
     bool isDead() const { return health_ <= 0; }
     void addGold(int gold) { gold_ += gold; }
 
