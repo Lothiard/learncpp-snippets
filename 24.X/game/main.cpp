@@ -48,6 +48,9 @@ bool fight(Player& player, Monster& monster) {
     if (monster.isDead()) {
         std::cout << "You killed " << monster.name() << '\n';
         player.levelUp();
+        std::cout << "You are now level " << player.level() << '\n';
+        player.addGold(monster.gold());
+        std::cout << "You found " << monster.gold() << " gold\n";
         return true;
     }
     takeDamage(player, monster);
@@ -97,10 +100,14 @@ void play(Player& player) {
 
         if (player.hasWon()) {
             std::cout << "You won!\n";
+            std::cout << "You take home " << player.gold()
+                      << " gold and all the aura\n";
             break;
         }
         if (player.isDead()) {
             std::cout << "You died!\n";
+            std::cout << "You lost all your aura on level " << player.level()
+                      << " with " << player.gold() << " gold\n";
             break;
         }
     }
