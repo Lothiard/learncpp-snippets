@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include <vector>
 
 class Shape {
@@ -55,10 +56,10 @@ public:
     }
 };
 
-int getLargestRadius(const std::vector<Shape*>& shapes) {
+int getLargestRadius(const std::vector<std::unique_ptr<Shape>>& shapes) {
     int max{};
-    for (const auto* shape : shapes) {
-        if (auto* circle{dynamic_cast<const Circle*>(shape)}) {
+    for (const auto& shape : shapes) {
+        if (auto* circle{dynamic_cast<const Circle*>(shape.get())}) {
             max = std::max(max, circle->radius());
         }
     }
@@ -66,20 +67,22 @@ int getLargestRadius(const std::vector<Shape*>& shapes) {
 }
 
 int main() {
-    std::vector<Shape*> v{new Circle{Point{1, 2}, 7},
-                          new Triangle{Point{1, 2}, Point{3, 4}, Point{5, 6}},
-                          new Circle{Point{7, 8}, 3}};
+    std::vector<std::unique_ptr<Shape>> v{};
+    v.reserve(3);
+    v.push_back(std::make_unique<Circle>(Point{1, 2}, 7));
+    v.push_back(
+        std::make_unique<Triangle>(Point{1, 2}, Point{3, 4}, Point{5, 6}));
+    v.push_back(std::make_unique<Circle>(Point{7, 8}, 3));
 
     // print each shape in vector v on its own line here
-    for (const auto* shape : v) { std::cout << *shape << '\n'; }
+    for (const auto& shape : v) { std::cout << *shape << '\n'; }
 
     std::cout << "The largest radius is: " << getLargestRadius(v)
               << '\n'; // write this function
 
     // delete each element in the vector here
-    for (const auto* shape : v) { delete shape; }
-
-    return 0;
+    // no need for it now
+    // for (const auto* shape : v) { delete shape; }
 
     return 0;
 }
