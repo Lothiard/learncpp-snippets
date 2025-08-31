@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 class Shape {
 public:
@@ -47,17 +48,38 @@ private:
 public:
     Circle(const Point& o, int r) : o_{o}, r_{r} {}
 
+    int radius() const { return r_; }
+
     std::ostream& print(std::ostream& out) const override {
         return out << "Circle(" << o_ << ", radius " << r_;
     }
 };
 
-int main() {
-    Circle c{Point{1, 2}, 7};
-    std::cout << c << '\n';
+int getLargestRadius(const std::vector<Shape*>& shapes) {
+    int max{};
+    for (const auto* shape : shapes) {
+        if (auto* circle{dynamic_cast<const Circle*>(shape)}) {
+            max = std::max(max, circle->radius());
+        }
+    }
+    return max;
+}
 
-    Triangle t{Point{1, 2}, Point{3, 4}, Point{5, 6}};
-    std::cout << t << '\n';
+int main() {
+    std::vector<Shape*> v{new Circle{Point{1, 2}, 7},
+                          new Triangle{Point{1, 2}, Point{3, 4}, Point{5, 6}},
+                          new Circle{Point{7, 8}, 3}};
+
+    // print each shape in vector v on its own line here
+    for (const auto* shape : v) { std::cout << *shape << '\n'; }
+
+    std::cout << "The largest radius is: " << getLargestRadius(v)
+              << '\n'; // write this function
+
+    // delete each element in the vector here
+    for (const auto* shape : v) { delete shape; }
+
+    return 0;
 
     return 0;
 }
